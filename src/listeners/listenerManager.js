@@ -11,7 +11,11 @@ const startAllListeners = async () => {
       continue
     }
 
-    await startTransferListener(networkName, networkConfig.wsUrl)
+    try {
+      await startTransferListener(networkName, networkConfig.wsUrl)
+    } catch (error) {
+      logger.error(`Failed to start listener for ${networkName} — skipping`, error.message)
+    }
   }
 
   logger.success('All blockchain listeners started')
